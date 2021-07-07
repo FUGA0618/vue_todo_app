@@ -34,7 +34,7 @@ export default {
   methods: {
     updateTodo (e) {
       this.$emit('updateTodo', this.index, e.target.value)
-      this.editFlg = !this.editFlg
+      this.toggleEditFlg()
     },
     deleteTodo () {
       this.$emit('deleteTodo', this.index)
