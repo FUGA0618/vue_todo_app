@@ -9,8 +9,8 @@
 
     <template v-else>
       <p>{{ content }}</p>
-      <EditButton @toggle-edit-flg="toggleEditFlg" />
-      <DeleteButton @delete-todo="deleteTodo" />
+      <EditButton @click="toggleEditFlg" />
+      <DeleteButton @click="deleteTodo" />
     </template>
   </li>
 </template>
