@@ -1,16 +1,17 @@
 <template>
   <li class="list-group-item">
-    <input type="text" class="form-control"
-           v-if="editFlg"
-           :value="content"
-           @keypress.enter="updateTodo">
-    <span v-if="editFlg">(編集完了後、Enterキーを押すと更新されます)</span>
+    <template v-if="editFlg">
+      <input type="text" class="form-control"
+             :value="content"
+             @keypress.enter="updateTodo">
+      <span>(編集完了後、Enterキーを押すと更新されます)</span>
+    </template>
 
-    <p v-if="!editFlg">{{ content }}</p>
-    <EditButton v-if="!editFlg"
-                @toggle-edit-flg="toggleEditFlg" />
-    <DeleteButton v-if="!editFlg"
-                  @delete-todo="deleteTodo" />
+    <template v-else>
+      <p>{{ content }}</p>
+      <EditButton @toggle-edit-flg="toggleEditFlg" />
+      <DeleteButton @delete-todo="deleteTodo" />
+    </template>
   </li>
 </template>
 
