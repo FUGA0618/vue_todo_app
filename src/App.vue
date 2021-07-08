@@ -14,7 +14,7 @@ export default {
   data () {
     return {
       storageKey: 'vue_memo_app',
-      todoItems: []
+      todoItems: {}
     }
   },
   components: {
@@ -23,12 +23,17 @@ export default {
   },
   methods: {
     getAllStorageData () {
-      const todos = JSON.parse(localStorage.getItem(this.storageKey) || '[]')
+      const todos = JSON.parse(localStorage.getItem(this.storageKey) || '{}')
       this.todoItems = todos
     },
     addTodo (content) {
-      let nextId = Object.keys(this.todoItems)
-      nextId = Math.max(...nextId) + 1
+      let nextId
+      if (Object.keys(this.todoItems).length === 0) {
+        nextId = 1
+      } else {
+        nextId = Object.keys(this.todoItems)
+        nextId = Math.max(...nextId) + 1
+      }
       this.todoItems[nextId] = content
 
       localStorage.setItem(this.storageKey, JSON.stringify(this.todoItems))
