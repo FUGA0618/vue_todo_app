@@ -13,7 +13,8 @@ export default {
   name: 'App',
   data () {
     return {
-      todoItems: this.getAllStorageData()
+      storageKey: 'vue_memo_app',
+      todoItems: []
     }
   },
   components: {
@@ -22,28 +23,31 @@ export default {
   },
   methods: {
     getAllStorageData () {
-      let todoItems = {}
-      for (let i = 0; i < localStorage.length; i++) {
-        let key = localStorage.key(i)
-        todoItems[key] = localStorage.getItem(key)
-      }
-      return todoItems
+      const todos = JSON.parse(localStorage.getItem(this.storageKey) || '[]')
+      this.todoItems = todos
     },
     addTodo (content) {
       let nextId = Object.keys(this.todoItems)
       nextId = Math.max(...nextId) + 1
-      localStorage.setItem(`${nextId}`, content)
-      this.todoItems = this.getAllStorageData()
+      this.todoItems[nextId] = content
+
+      localStorage.setItem(this.storageKey, JSON.stringify(this.todoItems))
+      this.getAllStorageData()
     },
     updateTodo (newTodo) {
       const [index, content] = newTodo
-      localStorage.setItem(index, content)
-      this.todoItems = this.getAllStorageData()
+      this.todoItems[index] = content
+      localStorage.setItem(this.storageKey, JSON.stringify(this.todoItems))
+      this.getAllStorageData()
     },
     deleteTodo (index) {
-      localStorage.removeItem(index)
-      this.todoItems = this.getAllStorageData()
+      delete this.todoItems[index]
+      localStorage.setItem(this.storageKey, JSON.stringify(this.todoItems))
+      this.getAllStorageData()
     }
+  },
+  mounted() {
+    this.getAllStorageData()
   }
 }
 </script>
