@@ -21,7 +21,19 @@ import DeleteButton from "./DeleteButton.vue"
 
 export default {
   name: 'ListItem',
-  props: ['index', 'content'],
+  props: {
+    index: {
+      type: String,
+      required: true,
+      validator: value => {
+        return parseInt(value)
+      }
+    },
+    content: {
+      type: String,
+      required: true
+    }
+  },
   components: {
     EditButton,
     DeleteButton

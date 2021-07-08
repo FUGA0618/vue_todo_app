@@ -14,7 +14,9 @@ import ListItem from "./ListItem.vue"
 
 export default {
   name: 'TodoList',
-  props: ['todoItems'],
+  props: {
+    todoItems: Object
+  },
   components: {
     ListItem
   },
